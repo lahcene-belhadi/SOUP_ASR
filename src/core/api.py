@@ -4,17 +4,20 @@
 #
 # Authors: Lahcène Belhadi <lahcene.belhadi@alumni.univ-avignon.fr>
 
+import os
+
 from flask import Flask, request
 
 from .asr import ASR
-import os
 
 api = Flask(__name__)
 
+
 @api.get("/")
 def root() -> str:
-    """Displays an \"Hello world!\""""
+    """Displays an \"Hello world!\" """
     return "Hello world!"
+
 
 @api.post("/transcribe")
 def transcribe() -> str:
@@ -27,11 +30,11 @@ def transcribe() -> str:
     # save to tmp
     tmp_path = os.path.join("./res/tmp", "tmpaudio.wav")
     audio_file.save(tmp_path)
-    
+
     asr = ASR()
     text = asr.transcribe(tmp_path)
 
     # delete tmp file
     os.remove(tmp_path)
-    
+
     return text

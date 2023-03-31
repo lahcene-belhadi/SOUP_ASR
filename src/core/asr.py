@@ -6,6 +6,7 @@
 
 from speechbrain.pretrained import EncoderDecoderASR
 
+
 class ASR:
     """SOUP's ASR"""
 
@@ -14,7 +15,7 @@ class ASR:
         self.asr = EncoderDecoderASR.from_hparams(
             "speechbrain/asr-crdnn-commonvoice-fr"
         )
-        
+
     def transcribe(self, audio) -> str:
         """Transcribes an audio to text
 
