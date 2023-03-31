@@ -6,6 +6,9 @@
 
 from flask import Flask, request
 
+from .asr import ASR
+import os
+
 api = Flask(__name__)
 
 @api.get("/")
@@ -21,5 +24,14 @@ def transcribe() -> str:
     if audio_file is None:
         return "No file provided!"
 
-    return "Got the file!"
+    # save to tmp
+    tmp_path = os.path.join("./res/tmp", "tmpaudio.wav")
+    audio_file.save(tmp_path)
+    
+    asr = ASR()
+    text = asr.transcribe(tmp_path)
 
+    # delete tmp file
+    os.remove(tmp_path)
+    
+    return text
